@@ -1,7 +1,7 @@
-local _VERSION = '0.01' -- 1st draft
+local _VERSION = '0.02'
 
 if rawget(_G,'kit') then
-	if kit._VERSION == __VERSION then
+	if kit._VERSION == _VERSION then
 		return kit
 	end
 end
@@ -52,15 +52,38 @@ local function extend(m,mod)
 	local r,ext = pcall(require, name)
 	-- print(name, r, ext)
 	if not r then
+		-- local ers = string.split(ext,"\n\t")
+		-- print(require'yaml'.encode(ers))
+
 		local errors = {}
-		for x in ext:gmatch("([^\r\n]+)") do
-			if x:match("^%s+no file") then
-			elseif x:match("^%s+no field package%.preload%[[^%]]+%]$") then
+		-- -- for x in ext:gmatch("([^\r\n]+)") do
+		-- for x in ext:gmatch("([^\r\n]+)\n\t") do
+		-- 	if x:match("^%s+no file") then
+		-- 	elseif x:match("^%s+no field package%.preload%[[^%]]+%]$") then
+		-- 	else
+		-- 		x = x:gsub("no field package%.preload%[[^%]]+%]","",1)
+		-- 		table.insert(errors,x)
+		-- 	end
+		-- end
+
+		local ix = 0
+		local a,b
+		repeat
+			a,b = ext:find("\n\t",ix,true)
+			if not a then a = #ext+1 end
+			local er = ext:sub(ix,a-1):gsub("^%s+","",1):gsub("\n","")
+			-- print(er)
+			if er:match("^%s*no file") then
+			elseif er:match("^%s*no field package%.preload%[[^%]]+%]$") then
 			else
-				x = x:gsub("no field package%.preload%[[^%]]+%]","",1)
-				table.insert(errors,x)
+				er = er:gsub("no field package%.preload%[[^%]]+%]","",1)
+				-- print(er)
+				table.insert(errors,er)
 			end
-		end
+			ix = b
+		until not b
+
+
 		if #errors > 1 then
 			-- print(mod.." failed to load")
 			error(table.concat(errors,"\n"),2)
