@@ -1,3 +1,4 @@
+local fiber = require 'fiber'
 return function(M)
 
 	function M.wait_lsn(server_id, lsn, timeout, pause)
