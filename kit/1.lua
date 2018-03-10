@@ -8,6 +8,24 @@ kit.1
 Return of function is better since temporary table is not created
 ]]
 
+-- Newer versions of tarantool brings table.new and table.clear
+-- Since use of this functions considered useful, mimic them if absent
+
+if not table.new then
+	table.new = function() return {} end
+end
+
+if not table.clear then
+	table.clear = function(t)
+		if type(t) ~= 'table' then
+			error("bad argument #1 to 'clear' (table expected, got "..(t ~= nil and type(t) or 'no value')..")",2)
+		end
+		local count = #t
+		for i=0, count do t[i]=nil end
+		return
+	end
+end
+
 return function(M,I)
 	local _node_keys = {
 		id    = true,
