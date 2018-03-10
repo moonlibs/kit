@@ -8,7 +8,7 @@ end
 
 -- Some awareness
 assert(_TARANTOOL,"Module requires Tarantool")
-if _TARANTOOL > '1.8.0' or _TARANTOOL < '1.6.0' then
+if _TARANTOOL > '2.0' or _TARANTOOL < '1.6.0' then
 	error(string.format("Version %s not supported", _TARANTOOL))
 end
 
