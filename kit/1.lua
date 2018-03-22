@@ -32,6 +32,7 @@ return function(M,I)
 		uuid  = true,
 		ro    = true,
 		lsn   = true,
+		rw    = false,
 	};
 	I._node_keys = _node_keys
 

@@ -14,7 +14,12 @@ return function(M)
 
 	local _node_keys = M._node_keys
 	getmetatable(M.node).__index = function(_,k)
-			return _node_keys[k] and box.info[k]
+		if _node_keys[k] then
+			return box.info[k]
+		end
+		if k == 'rw' then
+			return not box.info.ro
+		end
 	end
 
 end
