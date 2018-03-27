@@ -1,4 +1,4 @@
-local _VERSION = '0.02'
+local _VERSION = '0.03'
 
 if rawget(_G,'kit') then
 	if kit._VERSION == _VERSION then
@@ -8,12 +8,13 @@ end
 
 -- Some awareness
 assert(_TARANTOOL,"Module requires Tarantool")
-if _TARANTOOL > '2.0' or _TARANTOOL < '1.6.0' then
-	error(string.format("Version %s not supported", _TARANTOOL))
-end
 
 local maj,min,mic,bld = _TARANTOOL:match("(%d+)%.(%d+)%.(%d+)-(%d+)")
 assert(maj,"Failed to parse version")
+
+if (0+maj) > 2 or (0+min) < 6 then -- > 2.0 < 1.6
+	error(string.format("Version %s not supported", _TARANTOOL))
+end
 
 --[[
 
@@ -39,6 +40,7 @@ Note for developers:
 
 local M = setmetatable({
 	_VERSION = _VERSION;
+	_FOR = {};
 },{ __index = {
 	-- NOTE: here may be load-time methods
 } })
@@ -101,7 +103,7 @@ local function extend(m,mod)
 		else
 			error("Failed to load "..mod..".lua: bad return type: "..type(ext))
 		end
-		m._FOR = mod
+		table.insert(m._FOR, mod)
 	else
 		print(mod.." not found")
 	end

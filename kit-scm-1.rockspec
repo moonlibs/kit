@@ -20,6 +20,8 @@ build = {
 		['kit.loc']   = 'kit/loc.lua';
 		['kit.1.6']   = 'kit/1/6.lua';
 		['kit.1.7']   = 'kit/1/7.lua';
+		['kit.1.9']   = 'kit/1/9.lua';
+		['kit.1.10']   = 'kit/1/10.lua';
 		['kit.1.6.0'] = 'kit/1/6/0.lua';
 	}
 }
