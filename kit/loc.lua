@@ -7,12 +7,18 @@ if rawget(_G,'kit') then
 end
 
 -- Some awareness
+if not _TARANTOOL then
+	if rawget(_G,'box') and rawget(box,'info') then
+		_TARANTOOL = box.info.version
+	end
+end
+
 assert(_TARANTOOL,"Module requires Tarantool")
 
 local maj,min,mic,bld = _TARANTOOL:match("(%d+)%.(%d+)%.(%d+)-(%d+)")
 assert(maj,"Failed to parse version")
 
-if (0+maj) > 2 or (0+min) < 6 then -- > 2.0 < 1.6
+if (0+maj) > 2 or (0+min) < 5 then -- > 2.0 < 1.5
 	error(string.format("Version %s not supported", _TARANTOOL))
 end
 
@@ -51,47 +57,8 @@ local function extend(m,mod)
 	-- local ext = tryload(mod,1)
 
 	local name = 'kit.'..mod
-	local r,ext = pcall(require, name)
+	local ext = require(name)
 	-- print(name, r, ext)
-	if not r then
-		-- local ers = string.split(ext,"\n\t")
-		-- print(require'yaml'.encode(ers))
-
-		local errors = {}
-		-- -- for x in ext:gmatch("([^\r\n]+)") do
-		-- for x in ext:gmatch("([^\r\n]+)\n\t") do
-		-- 	if x:match("^%s+no file") then
-		-- 	elseif x:match("^%s+no field package%.preload%[[^%]]+%]$") then
-		-- 	else
-		-- 		x = x:gsub("no field package%.preload%[[^%]]+%]","",1)
-		-- 		table.insert(errors,x)
-		-- 	end
-		-- end
-
-		local ix = 0
-		local a,b
-		repeat
-			a,b = ext:find("\n\t",ix,true)
-			if not a then a = #ext+1 end
-			local er = ext:sub(ix,a-1):gsub("^%s+","",1):gsub("\n","")
-			-- print(er)
-			if er:match("^%s*no file") then
-			elseif er:match("^%s*no field package%.preload%[[^%]]+%]$") then
-			else
-				er = er:gsub("no field package%.preload%[[^%]]+%]","",1)
-				-- print(er)
-				table.insert(errors,er)
-			end
-			ix = b
-		until not b
-
-
-		if #errors > 1 then
-			-- print(mod.." failed to load")
-			error(table.concat(errors,"\n"),2)
-		end
-		return
-	end
 	if ext then
 		-- print(mod.." found ", ext)
 		if type(ext) == 'function' then
@@ -100,6 +67,8 @@ local function extend(m,mod)
 			for k,v in pairs(ext) do
 				rawset(m,k,v)
 			end
+		elseif type(ext) == 'boolean' and ext == false then
+			-- false is apecial value for skip
 		else
 			error("Failed to load "..mod..".lua: bad return type: "..type(ext))
 		end
@@ -109,11 +78,23 @@ local function extend(m,mod)
 	end
 end
 
+local function myloader(nm)
+	return function(...) return false end
+end
+
+table.insert(package.loaders, myloader)
+
 extend(M, maj)
 extend(M, maj..'.'..min)
 extend(M, maj..'.'..min..'.'..mic)
 extend(M, maj..'.'..min..'.'..mic..'-'..bld)
 extend(M, _TARANTOOL)
+
+for i,v in pairs(package.loaders) do
+	if v == myloader then
+		table.remove(package.loaders,i)
+	end
+end
 
 setmetatable(M,{
 	__newindex = function() error("Readonly", 2) end,
