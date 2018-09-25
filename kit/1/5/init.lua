@@ -4,6 +4,10 @@ package.preload.fiber = function()
 	return require 'kit.1.5.fiber'
 end
 
+package.preload.log = function()
+	return require 'kit.1.5.log'
+end
+
 return function(M)
 	
 	function M.wait_lsn(server_id, lsn, timeout, pause)
