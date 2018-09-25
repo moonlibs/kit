@@ -74,7 +74,7 @@ local function extend(m,mod)
 		end
 		table.insert(m._FOR, mod)
 	else
-		print(mod.." not found")
+		-- print(mod.." not found")
 	end
 end
 

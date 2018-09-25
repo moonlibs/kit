@@ -1,5 +1,9 @@
 local fiber = require 'kit.1.5.fiber'
 
+package.preload.fiber = function()
+	return require 'kit.1.5.fiber'
+end
+
 return function(M)
 	
 	function M.wait_lsn(server_id, lsn, timeout, pause)
