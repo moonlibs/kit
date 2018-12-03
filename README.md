@@ -16,6 +16,8 @@ Currently supported versions
 
 * 1.6
 * 1.7
+* 1.9
+* 1.10
 
 ## `_G`lobal
 
@@ -41,9 +43,11 @@ Returns node properties in the same way in 1.6 or 1.7 or later (like 1.6' box.in
 > kit.node
 ---
 - ro: false
+  rw: true
   lsn: 2
   uuid: 0a58cc6e-9df0-4044-ae0e-2a345ee136ec
   id: 1
+  hostname: my.hostname.com
 ...
 ```
 
@@ -63,4 +67,19 @@ else
     error("Failed to switch rw node")
 end
 ```
+
+## Compatibility functions
+
+* `table.new`
+
+* `table.clear`
+
+* `box.NULL`
+    - for every version, including 1.5 and accessible without box.cfg
+
+* `kit.schema_version`
+
+
+* module `fiber`
+    * module `fiber.channel`
 
