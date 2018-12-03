@@ -20,34 +20,62 @@ if not table.clear then
 		if type(t) ~= 'table' then
 			error("bad argument #1 to 'clear' (table expected, got "..(t ~= nil and type(t) or 'no value')..")",2)
 		end
-		local count = #t
-		for i=0, count do t[i]=nil end
+		for k in pairs(t) do
+			t[k] = nil
+		end
+		return
+	end
+end
+
+local HASH_MT = { __serialize = 'mapping' }
+
+
+local ffi = require 'ffi'
+if not (pcall(function() return not not ffi.C.gethostname end)) then
+	ffi.cdef[[ int gethostname(char *name, size_t len); ]]
+end
+if not (pcall(function() return not not ffi.C.strerror end)) then
+	ffi.cdef[[ char *strerror(int errnum); ]]
+end
+local size = 256
+local buf = ffi.new('char[?]',size)
+local function hostname()
+	local ret = ffi.C.gethostname(buf,size)
+	if ret == 0 then
+		return (string.gsub(ffi.string(buf), "%z+$", ""))
+	else
+		local log = require 'log'
+		log.info("Failed to get hostname: %s",ffi.string(ffi.C.strerror(ffi.errno())))
 		return
 	end
 end
 
 return function(M,I)
 	local _node_keys = {
-		id    = true,
-		uuid  = true,
-		ro    = true,
-		lsn   = true,
-		rw    = false,
+		-- id
+		-- uuid
+		-- ro
+		-- lsn
+		-- rw
+		hostname = hostname;
 	};
 	I._node_keys = _node_keys
 
 	local _serialize = function(self)
-		local t = {}
+		local t = setmetatable({},HASH_MT)
 		for k in pairs(_node_keys) do
 			t[k] = self[k]
 		end
-		t.rw = not t.ro
 		return t
 	end
-
+	
 	M.node = setmetatable({},{
 		__newindex = function() error("table is readonly",2) end,
-		__index = function(_,k) error(".node.__index to be defined",2) end,
+		__index = function(_,k)
+			if _node_keys[k] then
+				return _node_keys[k]()
+			end
+		end,
 		__serialize = _serialize,
 		__call = _serialize,
 	})

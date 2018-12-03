@@ -51,14 +51,12 @@ local M = setmetatable({
 	-- NOTE: here may be load-time methods
 } })
 
-
 local function extend(m,mod)
 
 	-- local ext = tryload(mod,1)
 
 	local name = 'kit.'..mod
 	local ext = require(name)
-	-- print(name, r, ext)
 	if ext then
 		-- print(mod.." found ", ext)
 		if type(ext) == 'function' then
@@ -83,8 +81,11 @@ local function myloader(nm)
 end
 
 table.insert(package.loaders, myloader)
-
 extend(M, maj)
+if tonumber(maj) > 1 or tonumber(min) > 5 then
+	-- all versions greater than 1.5
+	extend(M, maj..'.6+')
+end
 extend(M, maj..'.'..min)
 extend(M, maj..'.'..min..'.'..mic)
 extend(M, maj..'.'..min..'.'..mic..'-'..bld)
