@@ -1,11 +1,11 @@
 package = 'kit'
-version = 'scm-1'
+version = 'scm-2'
 source  = {
 	url    = 'git://github.com/moonlibs/kit.git',
 	branch = 'master',
 }
 description = {
-	summary  = "Compatibility kit for 1.6+",
+	summary  = "Compatibility kit for Tarantool",
 	homepage = 'https://github.com/moonlibs/kit.git',
 	license  = 'BSD',
 }
