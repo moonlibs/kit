@@ -24,6 +24,9 @@ build = {
 		['kit.1.9']   = 'kit/1/9.lua';
 		['kit.1.10']  = 'kit/1/10.lua';
 		['kit.2']     = 'kit/2.lua';
+		['kit.1.5']   = 'kit/1/5/init.lua';
+		['kit.1.5.fiber'] = 'kit/1/5/fiber.lua';
+
 	}
 }
 
