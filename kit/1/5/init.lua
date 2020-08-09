@@ -4,6 +4,14 @@ package.preload.fiber = function()
 	return require 'kit.1.5.fiber'
 end
 
+package.preload.socket = function()
+	return require 'kit.1.5.socket'
+end
+
+package.preload.errno = function()
+	return require 'kit.1.5.errno'
+end
+
 local log = require 'log'
 log.debug = log.info
 

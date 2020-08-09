@@ -12,6 +12,9 @@ M.find = box.fiber.find
 -- fiber.sleep()	Make a fiber go to sleep
 M.sleep = box.fiber.sleep
 
+-- fiber.name()
+M.name = box.fiber.name
+
 -- fiber.yield()	Yield control
 M.yield = function() box.fiber.sleep(0) end
 

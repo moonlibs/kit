@@ -26,7 +26,8 @@ build = {
 		['kit.2']     = 'kit/2.lua';
 		['kit.1.5']   = 'kit/1/5/init.lua';
 		['kit.1.5.fiber'] = 'kit/1/5/fiber.lua';
-
+		['kit.1.5.socket'] = 'kit/1/5/socket.lua';
+		['kit.1.5.errno'] = 'kit/1/5/errno.lua';
 	}
 }
 
