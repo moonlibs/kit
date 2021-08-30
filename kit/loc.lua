@@ -16,13 +16,19 @@ end
 assert(_TARANTOOL,"Module requires Tarantool")
 
 local maj,min,mic,bld = _TARANTOOL:match("(%d+)%.(%d+)%.(%d+)-(%d+)")
-assert(maj,"Failed to parse version")
+if not maj then
+	maj,min,mic,bld = _TARANTOOL:match("(%d+)%.(%d+)%.(%d+)-([%w%d]+%-%d+)")
+end
+if not maj then
+	maj,min,mic,bld = _TARANTOOL:match("(%d+)%.(%d+)%.(%d+)-([%w%d]+)")
+end
+assert(maj,"Failed to parse version ".._TARANTOOL)
 
 repeat
 	if (0+maj) == 1 then
 		if (0+min) >= 5 then break end -- 1.5+ is acceptable
 	elseif (0+maj) == 2 then
-		if (0+min) <= 9 then break end -- <= 2.7 is acceptable
+		if (0+min) <= 10 then break end -- <= 2.10 is acceptable
 	end
 	error(string.format("Version %s not supported", _TARANTOOL))
 until true
