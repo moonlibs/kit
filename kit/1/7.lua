@@ -15,14 +15,30 @@ return function(M, I)
 		until box.info.replication[server_id].lsn >= lsn or ( timeout and fiber.time() > start + timeout )
 		return box.info.replication[server_id].lsn >= lsn
 	end
-	
+
+	function M.wait_status(status, timeout, pause)
+		pause = pause or 0.01
+		if status == nil then
+			error("Usage: wait_status(status, timeout)")
+		end
+		local start = fiber.time()
+		while box.info.status ~= status do
+			if timeout and fiber.time() >= start + timeout then
+				return false
+			else
+				fiber.sleep(pause)
+			end
+		end
+		return true
+	end
+
 	local _node_keys = I._node_keys
 	local node_functions_raw = {
 		id    = { function() return box.info.id   end,           box.NULL };
 		uuid  = { function() return box.info.uuid end,           box.NULL };
 		lsn   = { function() return box.info.lsn  end,           box.NULL };
 		ro    = { function() return box.info.ro   end,               true };
-		rw    = { function() return not box.info.ro == true end,    false };
+		rw    = { function() return box.info.ro ~= true end,        false };
 	}
 
 	local function unmask()

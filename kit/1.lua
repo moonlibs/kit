@@ -27,6 +27,23 @@ if not table.clear then
 	end
 end
 
+-- cdata-error compatible assert function
+-- useful for wrapping so-called `nil, err` returns
+if not pcall(assert, false, {}) then
+	_G._assert = _G.assert
+	function assert(test, ...)
+		if not test then
+			local msg = select(1, ...)
+			if msg then
+				error(msg, 2)
+			else
+				error("assertion failed!", 2)
+			end
+		end
+		return test, ...
+	end
+end
+
 local HASH_MT = { __serialize = 'mapping' }
 
 
@@ -57,6 +74,7 @@ return function(M,I)
 		-- ro
 		-- lsn
 		-- rw
+		name = function() return config and config.get('sys.instance_name') end;
 		hostname = hostname;
 	};
 	I._node_keys = _node_keys

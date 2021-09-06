@@ -25,7 +25,7 @@ return function(M, I)
 		uuid  = { function() return box.info.server.uuid end,           box.NULL };
 		lsn   = { function() return box.info.server.lsn  end,           box.NULL };
 		ro    = { function() return box.info.server.ro   end,               true };
-		rw    = { function() return not box.info.server.ro == true end,    false };
+		rw    = { function() return box.info.server.ro ~= true end,        false };
 	}
 
 	local function unmask()
