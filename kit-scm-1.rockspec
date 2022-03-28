@@ -1,7 +1,7 @@
 package = 'kit'
 version = 'scm-1'
 source  = {
-	url    = 'git://github.com/moonlibs/kit.git',
+	url    = 'git+https://github.com/moonlibs/kit.git',
 	branch = 'v1',
 }
 description = {
