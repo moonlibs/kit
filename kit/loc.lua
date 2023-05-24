@@ -95,7 +95,7 @@ table.insert(package.loaders, myloader)
 extend(M, maj)
 if tonumber(maj) > 1 or tonumber(min) > 5 then
 	-- all versions greater than 1.5
-	extend(M, maj..'.6+')
+	extend(M, '1.6+')
 end
 extend(M, maj..'.'..min)
 extend(M, maj..'.'..min..'.'..mic)
