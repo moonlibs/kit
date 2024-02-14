@@ -29,6 +29,8 @@ repeat
 		if (0+min) >= 5 then break end -- 1.5+ is acceptable
 	elseif (0+maj) == 2 then
 		if (0+min) <= 11 then break end -- <= 2.10 is acceptable
+	elseif (0+maj) == 3 then
+		if (0+min) == 0 then break end -- < 3.1 is acceptable
 	end
 	error(string.format("Version %s not supported", _TARANTOOL))
 until true
