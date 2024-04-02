@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ["1.10.15", "2.8.4", "2.10.6", "2.10.7-gc64-amd64", "2.11.0", "2.11.1"]
+        version: ["1.10.15", "2.8.4", "2.10.6", "2.10.7-gc64-amd64", "2.11.2", "3.0.1"]
     steps:
     - uses: actions/checkout@v3
     - uses: tarantool/setup-tarantool@v2
