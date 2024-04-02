@@ -16,7 +16,7 @@ jobs:
       with:
         tarantool-version: ${{matrix.version}}
     - name: install tt
-      run: apt-get -y install tt
+      run: sudo apt-get -y install tt
     - name: install luacov-console
       run: tt rocks install luacov-console
     - name: install luacov-coveralls
