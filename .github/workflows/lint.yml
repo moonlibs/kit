@@ -13,6 +13,6 @@ jobs:
       with:
         tarantool-version: '2.11.2'
     - name: install tt
-      run: apt-get -y install tt
+      run: sudo apt-get -y install tt
     - name: install tarantool/luacheck and execute it
       run: tt rocks install luacheck && .rocks/bin/luacheck .
