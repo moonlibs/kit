@@ -14,13 +14,14 @@ jobs:
     - uses: actions/checkout@v4
     - uses: tarantool/setup-tarantool@v3
       with:
-        tarantool-version: ${{matrix.version}}
-    - name: install tt
-      run: sudo apt-get -y install tt
+        tarantool-version: '2.10.4'
     - name: install luacov-console
-      run: tt rocks install luacov-console
+      run: tarantoolctl rocks install luacov-console
     - name: install luacov-coveralls
-      run: tt rocks install --server=http://luarocks.org luacov-coveralls
+      run: tarantoolctl rocks install --server=http://luarocks.org luacov-coveralls
+    - uses: tarantool/setup-tarantool@v3
+      with:
+        tarantool-version: ${{matrix.version}}
     - name: setup perl
       uses: shogo82148/actions-setup-perl@v1
       with:
@@ -52,12 +53,10 @@ jobs:
     - uses: tarantool/setup-tarantool@v3
       with:
         tarantool-version: '2.10.7'
-    - name: install tt
-      run: apt-get -y install tt  
     - name: install luacov-coveralls 0.2.3
-      run: tt rocks install --server=https://luarocks.org luacov-coveralls 0.2.3
+      run: tarantoolctl rocks install --server=https://luarocks.org luacov-coveralls 0.2.3
     - name: install luacov-console 1.2.0
-      run: tt rocks --server http://moonlibs.github.io/rocks install luacov-console 1.2.0
+      run: tarantoolctl rocks --server http://moonlibs.github.io/rocks install luacov-console 1.2.0
     - name: Download run artifacts
       uses: actions/download-artifact@v4
       with:
