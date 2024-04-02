@@ -1,4 +1,4 @@
-local _VERSION = '2'
+local _VERSION = '3'
 
 if rawget(_G,'kit') then
 	if kit._VERSION == _VERSION then

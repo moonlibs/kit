@@ -18,6 +18,8 @@ Currently supported versions
 * 1.7
 * 1.9
 * 1.10
+* 2.x
+* 3.0.x
 
 ## `_G`lobal
 
@@ -75,11 +77,9 @@ end
 * `table.clear`
 
 * `box.NULL`
-    - for every version, including 1.5 and accessible without box.cfg
+  * for every version, including 1.5 and accessible without box.cfg
 
 * `kit.schema_version`
 
-
 * module `fiber`
-    * module `fiber.channel`
-
+  * module `fiber.channel`
