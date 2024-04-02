@@ -1,0 +1,21 @@
+runreport = false
+deletestats = false
+
+exclude = {
+	"%.rocks/",
+	"builtin/",
+	"01-base%.test%.lua"
+}
+
+pathcorrect = {
+	{ "^/source/kit/", "" },
+}
+
+coveralls = {
+	root = "/",
+	debug = true,
+	pathcorrect = {
+			{ "^/home/runner/work/kit/kit/", "" },
+			{ "^/source/kit", "" },
+	},
+}
