@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/moonlibs/kit/badge.svg)](https://coveralls.io/github/moonlibs/kit)
+
 <a href="http://tarantool.org">
 	<img src="https://avatars2.githubusercontent.com/u/2344919?v=2&s=250" align="right">
 </a>
