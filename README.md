@@ -22,6 +22,7 @@ Currently supported versions
 * 1.10
 * 2.x
 * 3.0.x
+* 3.1.x
 
 ## `_G`lobal
 
