@@ -15,10 +15,20 @@ jobs:
     - uses: tarantool/setup-tarantool@v3
       with:
         tarantool-version: ${{matrix.version}}
-    - name: install luacov-console
-      run: tarantoolctl rocks install luacov-console
-    - name: install luacov-coveralls
-      run: tarantoolctl rocks install --server=http://luarocks.org luacov-coveralls
+    - name: Install luacov-console
+      run: |
+        if [[ "${{ matrix.version }}" => "3.0.0" ]]; then
+          tt rocks install luacov-console
+        else
+          tarantoolctl rocks install luacov-console
+        fi
+    - name: Install luacov-coveralls
+      run: |
+        if [[ "${{ matrix.version }}" => "3.0.0" ]]; then
+          tt rocks install --server=http://luarocks.org luacov-coveralls
+        else
+          tarantoolctl rocks install --server=http://luarocks.org luacov-coveralls
+        fi
     - uses: tarantool/setup-tarantool@v3
       with:
         tarantool-version: ${{matrix.version}}
