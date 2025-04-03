@@ -18,6 +18,7 @@ jobs:
     - name: Install luacov-console
       run: |
         if [[ "${{ matrix.version }}" == "3.0.0" || "${{ matrix.version }}" > "3.0.0" ]]; then
+          apt-get install tt -y -q
           tt rocks install luacov-console
         else
           tarantoolctl rocks install luacov-console
