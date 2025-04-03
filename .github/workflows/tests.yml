@@ -21,8 +21,8 @@ jobs:
           # ToDo
           # dirty hack add module repo
           # drop it after update setup-tarantool
-          echo "deb https://download.tarantool.org/tarantool/modules/ubuntu/ jammy main" >> /etc/apt/sources.list.d/tarantool_3.list
-          echo "deb-src https://download.tarantool.org/tarantool/modules/ubuntu/ jammy main" >> /etc/apt/sources.list.d/tarantool_3.list
+          sudo echo "deb https://download.tarantool.org/tarantool/modules/ubuntu/ jammy main" >> /etc/apt/sources.list.d/tarantool_3.list
+          sudo echo "deb-src https://download.tarantool.org/tarantool/modules/ubuntu/ jammy main" >> /etc/apt/sources.list.d/tarantool_3.list
           sudo apt-get install tt -y -q
           tt rocks install luacov-console
         else
