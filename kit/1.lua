@@ -68,13 +68,23 @@ local function hostname()
 end
 
 return function(M,I)
+	-- seek alternative for config becouse "config" replaces by tarantool 3 module
+	local config_module
+	for _, mod in ipairs({'moonconfig', 'override-config', 'config'}) do
+		local ok, res = pcall(require, mod)
+		if ok then
+			config_module = res
+			break
+		end
+	end
+
 	local _node_keys = {
 		-- id
 		-- uuid
 		-- ro
 		-- lsn
 		-- rw
-		name = function() return config and config.get('sys.instance_name') end;
+		name = function() return config_module and config_module.get('sys.instance_name') end;
 		hostname = hostname;
 	};
 	I._node_keys = _node_keys
