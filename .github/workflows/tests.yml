@@ -31,7 +31,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: local
-        key: perl-${{ steps.perl.outputs.perl-hash }}
+        key: perl-${{ runner.os }}-${{ matrix.node-version }}-${{ steps.perl.outputs.perl-hash }}
     - name: show perl version
       run: |
         perl -v
