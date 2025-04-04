@@ -9,32 +9,16 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        version: ["1.10.15", "2.10.7", "2.11.6", "3.0.1"]
+        version: ["1.10.15", "2.10.7", "2.11.2", "3.0.1"]
     steps:
     - uses: actions/checkout@v4
     - uses: tarantool/setup-tarantool@v3
       with:
-        tarantool-version: ${{matrix.version}}
-    - name: Install luacov-console
-      run: |
-        if [[ "${{ matrix.version }}" == "3.0.0" || "${{ matrix.version }}" > "3.0.0" ]]; then
-          # ToDo
-          # dirty hack add module repo
-          # drop it after update setup-tarantool
-          sudo echo "deb https://download.tarantool.org/tarantool/modules/ubuntu/ jammy main" >> /etc/apt/sources.list.d/tarantool_3.list
-          sudo echo "deb-src https://download.tarantool.org/tarantool/modules/ubuntu/ jammy main" >> /etc/apt/sources.list.d/tarantool_3.list
-          sudo apt-get install tt -y -q
-          tt rocks install luacov-console
-        else
-          tarantoolctl rocks install luacov-console
-        fi
-    - name: Install luacov-coveralls
-      run: |
-        if [[ "${{ matrix.version }}" == "3.0.0" || "${{ matrix.version }}" > "3.0.0" ]]; then
-          tt rocks install --server=http://luarocks.org luacov-coveralls
-        else
-          tarantoolctl rocks install --server=http://luarocks.org luacov-coveralls
-        fi
+        tarantool-version: '2.10.4'
+    - name: install luacov-console
+      run: tarantoolctl rocks install luacov-console
+    - name: install luacov-coveralls
+      run: tarantoolctl rocks install --server=http://luarocks.org luacov-coveralls
     - uses: tarantool/setup-tarantool@v3
       with:
         tarantool-version: ${{matrix.version}}
