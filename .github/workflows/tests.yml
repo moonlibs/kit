@@ -23,9 +23,15 @@ jobs:
       with:
         tarantool-version: ${{matrix.version}}
     - name: setup perl
+      id: perl
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: 5.18.4
+    - name: Cache CPAN Modules
+      uses: actions/cache@v3
+      with:
+        path: local
+        key: perl-${{ steps.perl.outputs.perl-hash }}
     - name: show perl version
       run: |
         perl -v
