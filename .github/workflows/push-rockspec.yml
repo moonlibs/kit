@@ -32,7 +32,7 @@ jobs:
     - run: tarantoolctl rocks install ${{ env.ROCK_NAME }}-${{ env.TAG }}-1.rockspec
     - run: tarantoolctl rocks pack ${{ env.ROCK_NAME }}-${{ env.TAG }}-1.rockspec
     # Install native lua with luarocks
-    - uses: leafo/gh-actions-lua@v9
+    - uses: leafo/gh-actions-lua@v11
       with:
         luaVersion: "luajit-2.1.0-beta3"
     - uses: leafo/gh-actions-luarocks@v4
