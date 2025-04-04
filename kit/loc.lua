@@ -1,5 +1,7 @@
 local _VERSION = '3'
 
+math.randomseed(os.time() + os.clock())
+
 if rawget(_G,'kit') then
 	if kit._VERSION == _VERSION then
 		return kit
