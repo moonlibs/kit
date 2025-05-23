@@ -1,0 +1,41 @@
+name: Setup Tarantool Test Environment
+description: 'Sets up Tarantool and dependencies for testing'
+
+inputs:
+  tarantool-version:
+    description: 'Tarantool version to install'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: setup tarantool
+      uses: tarantool/setup-tarantool@v3
+      with:
+        tarantool-version: ${{ inputs.tarantool-version }}
+    - name: add tarantool/modules repo
+      shell: bash
+      run: |
+        os=$(. /etc/os-release && echo $ID)
+        dist=$(. /etc/os-release && echo $VERSION_CODENAME)
+        curl -L "https://download.tarantool.org/tarantool/modules/gpgkey" | sudo apt-key add -
+        apt_source_path="/etc/apt/sources.list.d/tarantool.list"
+        echo "deb https://download.tarantool.org/tarantool/modules/${os}/ ${dist} main" | sudo tee ${apt_source_path}
+    - name: install tt
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y tt
+    - name: install luacov-coveralls 0.2.3
+      shell: bash
+      run: tt rocks install --server https://luarocks.org luacov-coveralls 0.2.3
+    - name: install luacov-console 1.2.0
+      shell: bash
+      run: tt rocks --server http://moonlibs.github.io/rocks install luacov-console 1.2.0
+    - name: setup perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: 5.18.4
+    - name: install TAP::Harness
+      shell: bash
+      run: |
+        cpanm -v
+        cpanm --notest TAP::Harness

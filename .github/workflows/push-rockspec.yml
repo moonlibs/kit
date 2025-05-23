@@ -1,7 +1,7 @@
 name: Create and push rockspec for moonlibs/sync
 
 on:
-  workflow_dispatch:
+  workflow_run:
     workflows:
       - "Linting with luacheck"
       - "Testing with unit tests"
@@ -37,7 +37,7 @@ jobs:
         luaVersion: "luajit-2.1.0-beta3"
     - uses: leafo/gh-actions-luarocks@v5
       with:
-        luarocksVersion: "3.8.0"
+        luaRocksVersion: "3.8.0"
     - uses: unfor19/install-aws-cli-action@v1.0.3
     - run: mkdir .build && cp ${{ env.ROCK_NAME }}-dev-1.rockspec ${{ env.ROCK_NAME }}-${{ env.TAG }}-1.rockspec .build/ && cp *.src.rock .build/
     - name: rebuild and publish s3 luarocks server
