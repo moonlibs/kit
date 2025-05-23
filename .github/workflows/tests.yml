@@ -12,27 +12,9 @@ jobs:
         version: ["1.10.15", "2.10.7", "2.11.2", "3.0.1"]
     steps:
     - uses: actions/checkout@v4
-    - uses: tarantool/setup-tarantool@v3
-      with:
-        tarantool-version: '2.10.4'
-    - name: install luacov-console
-      run: tarantoolctl rocks install luacov-console
-    - name: install luacov-coveralls
-      run: tarantoolctl rocks install --server=http://luarocks.org luacov-coveralls
-    - uses: tarantool/setup-tarantool@v3
+    - uses: ./.github/actions/setup-test
       with:
         tarantool-version: ${{matrix.version}}
-    - name: setup perl
-      uses: shogo82148/actions-setup-perl@v1
-      with:
-        perl-version: 5.18.4
-    - name: show perl version
-      run: |
-        perl -v
-    - name: install TAP::Harness
-      run: |
-        cpanm -v
-        cpanm --notest TAP::Harness
     - name: run tests
       env:
         LUACOV_ENABLE: true
@@ -50,13 +32,9 @@ jobs:
     needs: ["run-unit-tests"]
     steps:
     - uses: actions/checkout@v4
-    - uses: tarantool/setup-tarantool@v3
+    - uses: ./.github/actions/setup-test
       with:
-        tarantool-version: '2.11.6'
-    - name: install luacov-coveralls 0.2.3
-      run: tarantoolctl rocks install --server=https://luarocks.org luacov-coveralls 0.2.3
-    - name: install luacov-console 1.2.0
-      run: tarantoolctl rocks --server http://moonlibs.github.io/rocks install luacov-console 1.2.0
+        tarantool-version: '2.11'
     - name: Download run artifacts
       uses: actions/download-artifact@v4
       with:

@@ -1,0 +1,30 @@
+name: Setup Tarantool Test Environment
+description: 'Sets up Tarantool and dependencies for testing'
+
+inputs:
+  tarantool-version:
+    description: 'Tarantool version to install'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: setup tarantool
+      uses: tarantool/setup-tarantool@v3
+      with:
+        tarantool-version: ${{ inputs.tarantool-version }}
+    - name: install luacov-coveralls 0.2.3
+      run: tarantoolctl rocks install --server=https://luarocks.org luacov-coveralls 0.2.3
+    - name: install luacov-console 1.2.0
+      run: tarantoolctl rocks --server http://moonlibs.github.io/rocks install luacov-console 1.2.0
+    - name: setup perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: 5.18.4
+    - name: show perl version
+      run: |
+        perl -v
+    - name: install TAP::Harness
+      run: |
+        cpanm -v
+        cpanm --notest TAP::Harness
