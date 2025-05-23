@@ -5,9 +5,6 @@ inputs:
   tarantool-version:
     description: 'Tarantool version to install'
     required: true
-  only_tt:
-    description: 'Only install tt'
-    required: false
 
 runs:
   using: "composite"
@@ -16,7 +13,6 @@ runs:
       uses: tarantool/setup-tarantool@v3
       with:
         tarantool-version: ${{ inputs.tarantool-version }}
-      if: ${{ inputs.only_tt != 'true' }}
     - name: add tarantool/modules repo
       shell: bash
       run: |
