@@ -17,7 +17,7 @@ runs:
       shell: bash
       run: |
         os=$(. /etc/os-release && echo $ID)
-        dist=$(. /etc/os-release && echo $VERSION_ID)
+        dist=$(. /etc/os-release && echo $VERSION_CODENAME)
         curl -L "https://download.tarantool.org/tarantool/modules/gpgkey" | sudo apt-key add -
         apt_source_path="/etc/apt/sources.list.d/tarantool.list"
         echo "deb https://download.tarantool.org/tarantool/modules/${os}/ ${dist} main" | sudo tee ${apt_source_path}
