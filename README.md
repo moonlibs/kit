@@ -4,15 +4,13 @@
 	<img src="https://avatars2.githubusercontent.com/u/2344919?v=2&s=250" align="right">
 </a>
 
-# Compatibility kit for 1.6+ (and maybe 1.5 later)
+# Compatibility kit for 1.5+
 
 There are many minor differences between 1.6 and 1.7, which are mostly naming and data-sources. This kit was created to eliminate support hell in applications for upcoming changes in different versions and to update all of them in one place (this).
 
 Updating single module is much simplier and safer than update of tarantool or application. And if some issue was provided within given version (as was with box.info.server), it can't be fixed within that version (only next), but it could be easily fixed with separate module.
 
 Backward compatibility, stability and feature backporting is the main goal and value of this project.
-
-For now it's a working draft. I'd expect requests and patches for different features and incompatibilities between 1.6 and 1.7. There is an imlpemetation of 2 features to demonstrate the way it could be used.
 
 Currently supported versions
 
@@ -21,10 +19,7 @@ Currently supported versions
 * 1.9
 * 1.10
 * 2.x
-* 3.0.x
-* 3.1.x
-* 3.2.x
-* 3.3.x
+* 3.0.x - 3.4.x
 
 ## `_G`lobal
 
@@ -87,4 +82,5 @@ end
 * `kit.schema_version`
 
 * module `fiber`
-  * module `fiber.channel`
+
+* module `fiber.channel`
