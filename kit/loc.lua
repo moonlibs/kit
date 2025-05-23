@@ -1,4 +1,4 @@
-local _VERSION = '3'
+local _VERSION = '3.4'
 
 if rawget(_G,'kit') then
 	if kit._VERSION == _VERSION then
@@ -28,9 +28,9 @@ repeat
 	if (0+maj) == 1 then
 		if (0+min) >= 5 then break end -- 1.5+ is acceptable
 	elseif (0+maj) == 2 then
-		if (0+min) <= 11 then break end -- <= 2.10 is acceptable
+		if (0+min) <= 11 then break end -- <= 2.11 is acceptable
 	elseif (0+maj) == 3 then
-		if (0+min) <= 3 then break end -- <= 3.3 is acceptable
+		if (0+min) <= 4 then break end -- <= 3.4 is acceptable
 	end
 	error(string.format("Version %s not supported", _TARANTOOL))
 until true
@@ -65,9 +65,6 @@ local M = setmetatable({
 } })
 
 local function extend(m,mod)
-
-	-- local ext = tryload(mod,1)
-
 	local name = 'kit.'..mod
 	local ext = require(name)
 	if ext then
