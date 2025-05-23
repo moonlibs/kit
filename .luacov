@@ -4,7 +4,7 @@ deletestats = false
 exclude = {
 	"%.rocks/",
 	"builtin/",
-	"01-base%.test%.lua"
+	"t/.+%.test",
 }
 
 pathcorrect = {
