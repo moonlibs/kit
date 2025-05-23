@@ -5,6 +5,7 @@ inputs:
   tarantool-version:
     description: 'Tarantool version to install'
     required: true
+    default: '2.11'
 
 runs:
   using: "composite"
