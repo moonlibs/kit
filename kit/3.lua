@@ -10,6 +10,10 @@ return function(M,I)
 		return box.info.hostname
 	end
 	I._node_keys.name = function()
-		return box.info.name
+		local name = box.info.name
+		if name == nil and rawget(_G, 'config') and config._flat  then
+			name = config.get('sys.instance_name')
+		end
+		return name
 	end
 end

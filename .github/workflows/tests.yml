@@ -16,10 +16,7 @@ jobs:
       with:
         tarantool-version: ${{matrix.version}}
     - name: run tests
-      env:
-        LUACOV_ENABLE: true
-      run: |
-        make test
+      run: make test
     - name: rename luacov.stats.out
       run: mv luacov.stats.out luacov.stats.out-${{matrix.version}}
     - uses: actions/upload-artifact@master

@@ -1,0 +1,30 @@
+name: Setup Tarantool Test Environment
+description: 'Sets up Tarantool and tt'
+
+inputs:
+  tarantool-version:
+    description: 'Tarantool version to install'
+    required: true
+  only_tt:
+    description: 'Only install tt'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: setup tarantool
+      uses: tarantool/setup-tarantool@v3
+      with:
+        tarantool-version: ${{ inputs.tarantool-version }}
+      if: ${{ inputs.only_tt != 'true' }}
+    - name: add tarantool/modules repo
+      shell: bash
+      run: |
+        os=$(. /etc/os-release && echo $ID)
+        dist=$(. /etc/os-release && echo $VERSION_CODENAME)
+        curl -L "https://download.tarantool.org/tarantool/modules/gpgkey" | sudo apt-key add -
+        apt_source_path="/etc/apt/sources.list.d/tarantool.list"
+        echo "deb https://download.tarantool.org/tarantool/modules/${os}/ ${dist} main" | sudo tee ${apt_source_path}
+    - name: install tt
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y tt

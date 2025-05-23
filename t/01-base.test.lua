@@ -1,8 +1,9 @@
 #!/usr/bin/env tarantool
 
-if os.getenv("LUACOV_ENABLE") then
-    print("enabling luacov")
-    require 'luacov.runner'.init()
+local ok, runner = pcall(require, 'luacov.runner')
+if ok then
+	print("Running luacov")
+	runner.init()
 end
 
 local kit = require 'kit'
