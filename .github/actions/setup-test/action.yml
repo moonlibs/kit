@@ -20,7 +20,7 @@ runs:
         dist=$(. /etc/os-release && echo $VERSION_ID)
         curl -L "https://download.tarantool.org/tarantool/modules/gpgkey" | sudo apt-key add -
         apt_source_path="/etc/apt/sources.list.d/tarantool.list"
-        sudo echo "deb https://download.tarantool.org/tarantool/modules/${os}/ ${dist} main" >> ${apt_source_path}
+        echo "deb https://download.tarantool.org/tarantool/modules/${os}/ ${dist} main" | sudo tee ${apt_source_path}
     - name: install tt
       shell: bash
       run: sudo apt-get update && sudo apt-get install -y tt
