@@ -19,7 +19,7 @@ Currently supported versions
 * 1.9
 * 1.10
 * 2.x
-* 3.0.x - 3.4.x
+* 3.0.x - 3.6.x
 
 ## `_G`lobal
 
