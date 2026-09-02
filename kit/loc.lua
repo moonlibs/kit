@@ -1,4 +1,4 @@
-local _VERSION = '3.4'
+local _VERSION = '3.5'
 
 if rawget(_G,'kit') then
 	if kit._VERSION == _VERSION then
@@ -30,7 +30,7 @@ repeat
 	elseif (0+maj) == 2 then
 		if (0+min) <= 11 then break end -- <= 2.11 is acceptable
 	elseif (0+maj) == 3 then
-		if (0+min) <= 4 then break end -- <= 3.4 is acceptable
+		if (0+min) <= 6 then break end -- <= 3.6 is acceptable
 	end
 	error(string.format("Version %s not supported", _TARANTOOL))
 until true
